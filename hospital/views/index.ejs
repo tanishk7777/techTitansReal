@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedChain - Find Hospitals</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+               <h3><% if (datausr!=null) { %>
+                <p>WELCOME,<%=datausr.name%></p>
+              <% }%></h3>
+                <div id="user-info">
+                    <a href="http://localhost:8000/login" id="user-login">User Registration</a>
+                    <a href="#" id="hospital-login">Hospital Login</a>
+                </div>
+                <div id="logged-in-user" style="display: none;">
+                    <span id="username-display"></span>
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="hospital-list">
+            <h1>Hospitals in Your City</h1>
+            <!-- List of Hospitals -->
+            
+                <% patients.forEach(patient=>{
+                    %>
+                    <div class="hospital-card">
+                    <div>
+                
+                  <h2><%=patient.name %> Hospital</h2></div>
+                  <div><h3><%=patient.address%></h3></div>
+                  <a href="http://localhost:8000/<%=patient._id %>" id = "VisitLink">visit</a>
+                </div><%})%>
+            </div>
+           
+        
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 MedChain. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    
+</body>
+</html><!DOCTYPE html>

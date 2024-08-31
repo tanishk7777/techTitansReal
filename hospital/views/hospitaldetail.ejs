@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div id="user-info">
+                    <a href="http://localhost:8000/login" id="user-registration">User Registration</a>
+                    <a href="#" id="hospital-login">Hospital Login</a>
+                </div>
+                <div id="logged-in-user" style="display: none;">
+                    <span id="username-display"></span>
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="hospital-options-list">
+            <h1 id="hospital-name"><%=user.name%></h1>
+            <div class="hospital-options">
+                <a href="#" class="open-modal" data-modal="modal1">View OPD Queue</a>
+                <a href="#" class="open-modal" data-modal="modal2">View Bed Status</a>
+                <a href="#" class="open-modal" data-modal="modal3">Book a Bed</a>
+                <a href="#" class="open-modal" data-modal="modal4">Schedule OPD Appointment</a>
+                <a href="#" class="open-modal" data-modal="modal5">APPOINTMENT DETAIL</a>
+                <div class="button-card">
+                    <button class="lab reports">Lab repoprts</button>
+                </div>
+                <div class="button-card">
+                    <button class="appointment details">Appointment Details</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 MedChain. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    
+</body>
+</html>
