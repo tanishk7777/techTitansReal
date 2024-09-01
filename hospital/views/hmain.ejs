@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Interface</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background:rgba(20, 118, 94, 0.771);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .section:hover {
+            transform: scale(1.02);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            color: #555;
+            line-height: 1.5;
+        }
+        .button {
+            background: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .button:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        .hospital-info {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hospital Management System</h1>
+</header>
+
+
+<div class="container">
+    <div class="section" id="inventory">
+        <h2>Inventory</h2>
+        <img src="https://plus.unsplash.com/premium_photo-1668487826871-2f2cac23ad56?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWVkaWNpbmV8ZW58MHx8MHx8fDA%3D" alt="Medicine Inventory">
+        <p>Manage your inventory efficiently with a clear overview of available medicines.</p>
+       <a href="/hospital/inventory"> <button class="button" >view Inventory</button></a>
+       <a href="/hospital/updateinventory"> <button class="button" >Add New Inventory</button></a>
+    </div>
+
+    <div class="section" id="patient-details">
+        <h2>Patient Details</h2>
+        <img src="https://media.istockphoto.com/id/1501185765/photo/man-doing-physical-therapy-and-walking-on-bars.webp?a=1&b=1&s=612x612&w=0&k=20&c=bVLKlI3iLwfyaclZFCMp6pVjoDDIdE7xUD-87IsOb3g=" alt="Patient Details">
+        <p>View and manage patient details easily with our intuitive interface.</p>
+       <a href="/hospital/patients"><button class="button" >view Patient Details</button></a> 
+    </div>
+
+    <div class="section" id="bed-status">
+        <h2>Bed Status</h2>
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/025/805/small/hospital-bed-for-covid-19-free-photo.jpg" alt="Bed Status">
+        <p>Manage the bed details easily with our easy-to-use interface.</p>
+      <a href="/hospital/addbed">  <button class="button" >add Bed </button></a>
+      <a href="/hospital/minbed">  <button class="button" >minus Bed</button></a>
+      <a href="/hospital/viewbeds">  <button class="button" >view Bed</button></a>
+    </div>
+
+    <div class="section" id="opd-queue-update">
+        <h2>OPD Status</h2>
+        <img src="https://t3.ftcdn.net/jpg/05/57/90/60/240_F_557906028_DrWk3JcdwWf2xHWiVGh7sbmhqt3HBna3.jpg" alt="OPD Status">
+        <p>View and manage OPD seat details of your hospital.</p>
+        <a href="/hospital/updatequeue"><button class="button">add OPD appointment</button></a>
+        <a href="/hospital/minqueue"><button class="button">remove OPD appointment</button></a>
+        <a href="/hospital/viewopd"><button class="button">view OPD appointment</button></a>
+    </div>
+</div>
+
+
+</body>
+</html>

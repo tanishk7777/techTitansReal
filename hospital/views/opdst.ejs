@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View OPD Status</title>
+</head>
+<body>
+    <h1>OPD Status</h1>
+    <% user.forEach(doctor => { %>
+        
+        <ul>
+            
+               <h2> <%=doctor.name%>: <%= doctor.appointment.length %> </h2>
+            
+        </ul>
+    <% }) %>
+    <a href="/hospital">Go Back</a>
+</body>
+</html>

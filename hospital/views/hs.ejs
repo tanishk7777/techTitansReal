@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://media.gettyimages.com/id/1358903157/photo/empty-hospital-beds-in-hospital-corridor.jpg?s=612x612&w=0&k=20&c=RTvtnNQsVMwpAOmnFe1UW--mKS_Ob1JxJeiIlVXXLx0='), linear-gradient(135deg, #f0f2f5, #ffffff);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: #333;
+        }
+
+        .heading {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.8); /* Slightly transparent background for better readability */
+            padding: 10px 0;
+            border-radius: 8px;
+        }
+        .hospital-name {
+            font-size: 3em; /* Increased size */
+            margin: 0;
+            color: #004d99; /* Darker blue for a more professional look */
+            font-weight: bold;
+        }
+        .hospital-address {
+            font-size: 1.3em; /* Slightly increased size */
+            margin: 0;
+            color: #666;
+            line-height: 1.5;
+        }
+        .buttons-container-left {
+            position: absolute;
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(10px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+        .buttons-container-right {
+            position: absolute;
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(10px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            margin-left: 500px;
+        }
+        .button-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 300px; /* Slightly increased width */
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .button-card:hover {
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        button {
+            background: linear-gradient(135deg, #0056b3, #003d7a); /* Blue gradient */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #003d7a, #002c5f); /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        .modal-content {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            width: 80%;
+            max-width: 800px; /* Increased size */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .modal-title {
+            font-size: 2em; /* Increased size */
+            color: #004d99; /* Darker blue */
+            margin: 0;
+        }
+        .close {
+            font-size: 2em; /* Increased size */
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .calendar {
+            margin: 20px 0;
+        }
+        .seats-info {
+            font-size: 1.3em; /* Slightly larger size */
+            color: #333;
+        }
+        .booking-form, .bed-booking-form, .opd-form {
+            margin-top: 20px;
+        }
+        .booking-form input, .bed-booking-form input, .opd-form input, .bed-booking-form select, .opd-form select, .booking-form button, .bed-booking-form button, .opd-form button {
+            margin: 5px 0;
+            padding: 10px;
+            width: calc(100% - 22px); /* Adjust for padding and border */
+            box-sizing: border-box;
+        }
+        .booking-form input[type="number"], .bed-booking-form input[type="number"], .opd-form input[type="number"] {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .booking-form button, .bed-booking-form button, .opd-form button {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .booking-form button:hover, .bed-booking-form button:hover, .opd-form button:hover {
+            background: linear-gradient(135deg, #218838, #1e7e34);
+        }
+        /* Dropdown Styles */
+        .dropdown {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+        .dropdown-content {
+            background-color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 20px; /* Increased padding */
+            box-sizing: border-box;
+            width: 400px; /* Increased width */
+            max-width: 100%;
+        }
+        .dropdown-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.5em; /* Increased size */
+            color: #004d99; /* Darker blue */
+        }
+        .dropdown-content select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #fff;
+            box-sizing: border-box;
+        }
+        .dropdown-content select:focus {
+            outline: none;
+            border-color: #004d99;
+        }
+        .dropdown-content button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #0056b3, #003d7a); /* Blue gradient */
+            color: white;
+            cursor: pointer;
+        }
+        .dropdown-content button:hover {
+            background: linear-gradient(135deg, #003d7a, #002c5f); /* Darker blue on hover */
+        }
+        .dropdown.show {
+            display: flex;
+        }
+        /* Bed Status Modal Styles */
+        .bed-status-modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+        }
+        .bed-status-modal-content {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .bed-status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .bed-status-title {
+            font-size: 2em; /* Increased size */
+            color: #004d99; /* Darker blue */
+            margin: 0;
+        }
+        .bed-status-close {
+            font-size: 2em; /* Increased size */
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+        .bed-status-close:hover {
+            color: #000;
+        }
+        .bed-list {
+            font-size: 1.3em; /* Slightly larger size */
+            color: #333;
+        }
+        /* OPD Form Styles */
+        .opd-form select, .opd-form input {
+            margin: 5px 0;
+            padding: 10px;
+            width: calc(100% - 22px); /* Adjust for padding and border */
+            box-sizing: border-box;
+        }
+        .opd-form select:focus, .opd-form input:focus {
+            outline: none;
+            border-color: #004d99; /* Darker blue */
+        }
+        /* Button Styles in the upper-right corner */
+        .auth-buttons {
+            padding-top:15px;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1;
+        }
+        .auth-buttons button {
+            background: linear-gradient(135deg, #007bff, #0056b3); /* Blue gradient */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding-top:0px;
+            padding-bottom:65px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .auth-buttons button:hover {
+            background: linear-gradient(135deg, #0056b3, #003d7a); /* Darker blue on hover */
+        }
+        #loginBtn{
+            width: 100px;
+            height: 70px;
+        }
+        /* Modal Styles */
+        .lab-report-modal, .lab-appointment-modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .lab-report-modal-content, .lab-appointment-modal-content {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px; /* Slightly increased size for better readability */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease-in-out; /* Fade-in animation */
+        }
+
+        .lab-report-header, .lab-appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #004d99; /* Bold line to match the title color */
+            padding-bottom: 15px;
+        }
+
+        .lab-report-title, .lab-appointment-title {
+            font-size: 1.8em; /* Increased size */
+            color: #004d99; /* Darker blue */
+            margin: 0;
+        }
+
+        .lab-report-close, .lab-appointment-close {
+            font-size: 1.8em; /* Increased size */
+            cursor: pointer;
+            color: #999; /* Subtle color for close icon */
+            transition: color 0.3s ease;
+        }
+
+        .lab-report-close:hover, .lab-appointment-close:hover {
+            color: #000; /* Darker on hover */
+        }
+
+        .lab-report-list, .lab-appointment-form {
+            margin: 20px 0;
+        }
+
+        .lab-report-list p, .lab-appointment-form label {
+            font-size: 1.2em; /* Larger text */
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .lab-appointment-form input, .lab-appointment-form select {
+            width: calc(100% - 22px); /* Adjusted for padding */
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .lab-appointment-form button {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1.1em; /* Slightly larger */
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .lab-appointment-form button:hover {
+            background: linear-gradient(135deg, #218838, #1e7e34);
+        }
+
+        /* Modal Fade-In Animation */
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="heading">
+        <div class="hospital-name"><%= user.name%> Hospital</div>
+        <div class="hospital-address">
+            <%= user.address%>
+        </div>
+    </div>
+
+   
+
+    <div class="buttons-container-left">
+        <div class="button-card">
+            <button id="showSeatsBtn">Opd queue</button>
+        </div>
+        <div class="button-card">
+            <button id="viewBedStatusBtn">View Bed Status</button>
+        </div>
+        <div class="button-card">
+            <button id="bookBedBtn">Book Bed</button>
+        </div>
+    </div>
+    <div class="buttons-container-right">
+        <div class="button-card">
+            <button id="scheduleAppointmentBtn">Schedule OPD Appointment</button>
+        </div>
+        <div class="button-card">
+            <button id="viewLabReportsBtn">View patient details</button>
+        </div>
+        <div class="button-card">
+            <button id="scheduleLabAppointmentBtn">Schedule Lab Appointment</button>
+        </div>
+    </div>
+
+    <!-- Modal for Check Seat Availability -->
+    <div class="modal" id="seatModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">OPD queue</div>
+                <span class="close" id="closeSeatModal">&times;</span>
+            </div>
+            <div class="calendar">
+                <!-- Calendar or date picker can be added here -->
+                <label for="datePicker">Select Date:</label>
+                <input type="date" id="datePicker" />
+            </div>
+            <div class="seats-info">
+                
+                <% user.doctors.forEach(doctor=>{
+                    %>
+                    <%=doctor.name%>:<%=doctor.appointment.length%><%})%>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Bed Status -->
+    <div class="bed-status-modal" id="bedStatusModal">
+        <div class="bed-status-modal-content">
+            <div class="bed-status-header">
+                <div class="bed-status-title">Bed Status</div>
+                <span class="bed-status-close" id="closeBedStatusModal">&times;</span>
+            </div>
+            <div class="bed-list">
+                <!-- Example bed status list -->
+                <div>General Ward: <%=user.beds[0]%></div>
+                <div>ICU: <%=user.beds[1]%></div>
+                <div>Private Rooms: <%=user.beds[2]%></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Booking Bed -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Book Bed</div>
+                <span class="close" id="closeBookingModal">&times;</span>
+            </div>
+            <div class="booking-form">
+                <label for="bedType">Select Bed Type:</label>
+                <form action="http://localhost:8000/book.ejs" method="post">
+                <select id="bedType" name="bed">
+                    <option value="general">General Ward</option>
+                    <option value="icu">ICU</option>
+                    <option value="private">Private Room</option>
+                </select>
+
+                <label for="patientName">Name:</label>
+                <input type="text" id="patientName" placeholder="Enter your name" name="name" />
+                <label for="patientGender">Gender:</label>
+                <select id="patientGender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <label for="patientAge">Age:</label>
+                <input type="number" id="patientAge" placeholder="Enter your age" name="age"/>
+                <button id="submitBooking"><input type="submit"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Scheduling OPD Appointment -->
+    <div class="modal" id="opdModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Schedule OPD Appointment</div>
+                <span class="close" id="closeOpdModal">&times;</span>
+            </div>
+            <form action="http://localhost:8000/bed.ejs" method="post">
+            <div class="opd-form">
+                <label for="department">Select Department:</label>
+                <input type="text" placeholder="enter department" name="dpt">
+                <label for="opdName">Name:</label>
+                <input type="text" id="opdName" placeholder="Enter your name" name="name" />
+                <label for="opdGender">Gender:</label>
+                <select id="opdGender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <label for="opdAge">Age:</label>
+                <input type="number" id="opdAge" placeholder="Enter your age" name="age" />
+                <button id="submitOpdAppointment"><input type="submit" placeholder="Book Appointment"></button>
+            </div></form>
+        </div>
+    </div>
+
+    <!-- Modal for Viewing Lab Reports -->
+    <div class="lab-report-modal" id="labReportModal">
+        <div class="lab-report-modal-content">
+            <div class="lab-report-header">
+                <div class="lab-report-title">Patient details: </div>
+              
+                <span class="lab-report-close" id="closeLabReportModal">&times;</span>
+            </div>
+            <b>Name:</b> <%= userl.name%><br>
+            <b>Age:</b>18</b>
+            <div class="lab-report-list">
+                <!-- Dynamic content for lab reports can be added here -->
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Scheduling Lab Appointment -->
+    <div class="lab-appointment-modal" id="labAppointmentModal">
+        <div class="lab-appointment-modal-content">
+            <div class="lab-appointment-header">
+                <div class="lab-appointment-title">Schedule Lab Appointment</div>
+                <span class="lab-appointment-close" id="closeLabAppointmentModal">&times;</span>
+            </div>
+            <div class="lab-appointment-form">
+                <form action="http://localhost:8000/labAppointment" method="post">
+                    <label for="labTestType">Select Test Type:</label>
+                    <select id="labTestType" name="testType" required>
+                        <option value="blood">Blood Test</option>
+                        <option value="urine">Urine Test</option>
+                        <option value="xray">X-Ray</option>
+                        <!-- Add more test types as needed -->
+                    </select>
+
+                    <label for="patientName">Name:</label>
+                    <input type="text" id="patientName" name="name" placeholder="Enter your name" required />
+
+                    <label for="patientGender">Gender:</label>
+                    <select id="patientGender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <label for="patientAge">Age:</label>
+                    <input type="number" id="patientAge" name="age" placeholder="Enter your age" required />
+
+                    <button id="submitLabAppointment">Schedule Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        document.getElementById('showSeatsBtn').addEventListener('click', function() {
+            document.getElementById('seatModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeSeatModal').addEventListener('click', function() {
+            document.getElementById('seatModal').style.display = 'none';
+        });
+
+        document.getElementById('viewBedStatusBtn').addEventListener('click', function() {
+            document.getElementById('bedStatusModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeBedStatusModal').addEventListener('click', function() {
+            document.getElementById('bedStatusModal').style.display = 'none';
+        });
+
+        document.getElementById('bookBedBtn').addEventListener('click', function() {
+            document.getElementById('bookingModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeBookingModal').addEventListener('click', function() {
+            document.getElementById('bookingModal').style.display = 'none';
+        });
+
+        document.getElementById('scheduleAppointmentBtn').addEventListener('click', function() {
+            document.getElementById('opdModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeOpdModal').addEventListener('click', function() {
+            document.getElementById('opdModal').style.display = 'none';
+        });
+
+        document.getElementById('submitBooking').addEventListener('click', function() {
+            // Handle booking form submission here
+            alert('Bed booked successfully!');
+            document.getElementById('bookingModal').style.display = 'none';
+        });
+
+        document.getElementById('submitOpdAppointment').addEventListener('click', function() {
+            // Handle OPD appointment scheduling here
+            alert('Appointment scheduled successfully!');
+            document.getElementById('opdModal').style.display = 'none';
+        });
+
+        document.getElementById('viewLabReportsBtn').addEventListener('click', function() {
+            document.getElementById('labReportModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeLabReportModal').addEventListener('click', function() {
+            document.getElementById('labReportModal').style.display = 'none';
+        });
+
+        document.getElementById('scheduleLabAppointmentBtn').addEventListener('click', function() {
+            document.getElementById('labAppointmentModal').style.display = 'flex';
+        });
+
+        document.getElementById('closeLabAppointmentModal').addEventListener('click', function() {
+            document.getElementById('labAppointmentModal').style.display = 'none';
+        });
+
+        document.getElementById('submitLabAppointment').addEventListener('click', function() {
+            alert('Lab Appointment scheduled successfully!');
+            document.getElementById('labAppointmentModal').style.display = 'none';
+        });
+
+
+        // Event listeners for login and signup buttons
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            alert('Login button clicked!');
+            // You can redirect to a login page or open a login modal here
+        });
+
+        document.getElementById('signupBtn').addEventListener('click', function() {
+            alert('Sign Up button clicked!');
+            // You can redirect to a signup page or open a signup modal here
+        });
+    </script>
+</body>
+</html>

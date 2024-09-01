@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedChain - Find Hospitals</title>
+    <style>
+        /* Global styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            height: 100%;
+            background-image: url('https://e1.pxfuel.com/desktop-wallpaper/339/991/desktop-wallpaper-hospital-logo-hospital.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #000033; /* Dark, non-transparent header */
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header h3 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #fff;
+        }
+
+        #user-info a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #00aaff;
+            font-weight: bold;
+        }
+
+        #user-info a:hover {
+            color: #0099dd;
+        }
+
+        /* Main content styles */
+        main {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: rgba(0, 0, 50, 0.85);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            min-height: 70vh; /* Increased height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Ensure space is filled */
+        }
+
+        .hospital-list h1 {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hospital-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hospital-card h2 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        .hospital-card p {
+            margin-top: 15px; /* Increased margin for more spacing */
+            font-size: 1em;
+            color: #ddd;
+        }
+
+        .hospital-card a {
+            text-decoration: none;
+            background-color: #00aaff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .hospital-card a:hover {
+            background-color: #0099dd;
+        }
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            padding: 10px 0; /* Reduced height */
+            background-color: rgba(0, 0, 50, 0.9);
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            margin: 0;
+            color: #bbb;
+            font-size: 0.9em;
+        }
+
+        footer p a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+
+        footer p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h3>MedChain</h3>
+            <div id="user-info">
+                <a href="http://localhost:8000/hospital/hlogin" id="hospital-login">Hospital Login</a>
+                <a href="http://localhost:8000/login" id="hospital-login">User Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="hospital-list">
+            <h1>Hospitals in Your City</h1>
+            <!-- List of Hospitals -->
+            
+                <% globalThis.forEach(patient=>{
+                    %>
+                    <div class="hospital-card">
+                    <div>
+                
+                  <h2><%=patient.name %> Hospital</h2></div>
+                  <div><h3><%=patient.address%></h3></div>
+                  <a href="http://localhost:8000/<%=patient._id %>" id = "VisitLink">visit</a>
+                </div><%})%>
+            </div>
+           
+        
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 MedChain. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+</body>
+
+</html>

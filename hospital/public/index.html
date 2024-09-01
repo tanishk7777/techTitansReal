@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedChain - Start</title>
+</head>
+<style>
+    /* landing-styles.css */
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    /* Body Styling */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #1E90FF; 
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    /* Container Styling */
+    .container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+    }
+    /* Heading */
+    .container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #1e90ff;
+    }
+    /* Input Field */
+    input[type="text"] {
+        width: calc(100% - 40px);
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    /* Button Styling */
+    button {
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        width: 100%;
+        background-color: #1e90ff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #1c86ee;
+    }
+    /* Link Button for Location */
+    a.button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 10px;
+        width: 100%;
+        background-color: #32cd32;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    a.button-link:hover {
+        background-color: #2eb82e;
+    }
+    /* Footer */
+    footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #888;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1>Welcome to MedChain</h1>
+        <p>Select an option to proceed:</p>
+
+        <div class="options">
+            <form id="city-form" action="http://localhost:8000/home" method="post">
+                <input type="text" id="city-name" name="city" placeholder="Enter city name">
+                <button type="submit">Submit</button>
+            </form>
+
+            <button id="get-location">Get Live Location</button>
+            <p id="live-city"></p>
+        </div>
+    </div>
+
+    <script>
+        // Replace with your OpenCage API key
+        const apiKey = '9a195ecf8040455ab8e756faba1ef2d5';
+
+        
+        // Event listener for "Get Live Location" button
+        document.getElementById('get-location').addEventListener('click', function() {
+            // Coordinates
+            const lat = 29.969513;
+            const lon = 76.878281;
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            
+            // Use OpenCage to get the city name from the coordinates
+            fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat},${lon}&key=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        const city = data.results[0].components.city || data.results[0].components.town || data.results[0].components.village;
+                        if (city) {
+                            // Display the city name in the input field
+                            document.getElementById('city-name').value = city;
+                            document.getElementById('live-city').textContent = `Detected City: ${city}`;
+                        } else {
+                            document.getElementById('live-city').textContent = "City not found.";
+                        }
+                    } else {
+                        document.getElementById('live-city').textContent = "No results found.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching the city name:', error);
+                    document.getElementById('live-city').textContent = "Error fetching city.";
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inventory Information</title>
+    
+    
+</head>
+<body>
+    <h1>inventory Details</h1>
+    <ul>
+        <% inventory.forEach(inventory => { %>
+           <div > <li>
+                <strong>Name:</strong> <%= inventory.name %> <br>
+                <strong>dosage:</strong> <%= inventory.dosage %> <br>
+                <strong>quantity:</strong> <%= inventory.quantity %> <br>
+                <strong>manufacturer:</strong> <%= inventory.manufacturer %> <br>
+                
+                <hr>
+            </li></div>
+        <% }) %>
+</body>
+</html>

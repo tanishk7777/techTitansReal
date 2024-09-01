@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("data:image/jpeg;base64,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");
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+    </style>
+</head>
+<body>
+    <h1>Register</h1>
+    <form action="/hospital/updatequeue" method="POST">
+        <div>
+            <label for="name">name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+       
+        
+        <div>
+            <label for="age">age:</label>
+            <input type="number" id="age" name="age" required>
+        </div>
+        
+        <div>
+            <label for="department">department:</label>
+            <input type="text" id="department" name="department" required>
+        </div>
+
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</body>
+</html>

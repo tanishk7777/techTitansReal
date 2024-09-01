@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+</head>
+<body>
+    <h1>Patient Details</h1>
+   
+    <ul>
+        <% patients.forEach(patient => { %>
+           <div > <li>
+                <strong>Name:</strong> <%= patient.name %> <br>
+                <strong>Age:</strong> <%= patient.age %> <br>
+                <strong>Gender:</strong> <%= patient.gender %> <br>
+                <strong>Address:</strong> <%= patient.address %> <br>
+                <strong>Contact Number:</strong> <%= patient.contactNumber %> <br>
+                <strong>Diagnosis:</strong> <%= patient.diagnosis %> <br>
+                <hr>
+            </li></div>
+        <% }) %>
+    </ul>
+  
+    
+</body>
+</html>

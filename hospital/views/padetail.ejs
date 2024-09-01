@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #1e88e5;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #1e88e5;
+            font-size: 24px;
+            border-bottom: 3px solid #1e88e5;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .section p, .section ul {
+            color: #555;
+            line-height: 1.6;
+        }
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .section ul li {
+            background: #fafafa;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section ul li strong {
+            color: #333;
+        }
+        .button {
+            background: #1e88e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hospital Management System</h1>
+</header>
+
+<div class="container">
+    <div class="section patient-info">
+        <h2>Patient Information</h2>
+        <p><strong>Name:</strong> John Doe</p>
+        <p><strong>Age:</strong> 45</p>
+        <p><strong>Gender:</strong> Male</p>
+        <p><strong>Contact:</strong> (123) 456-7890</p>
+        <p><strong>Address:</strong> 456 Health Street, Wellness City, HC 12345</p>
+        <p><strong>Medical History:</strong> No significant medical history.</p>
+    </div>
+
+    <div class="section booking-info">
+        <h2>Pending Appointments</h2>
+        <ul>
+            <li><strong>Appointment Date:</strong> August 30, 2024</li>
+            <li><strong>Department:</strong> Cardiology</li>
+            <li><strong>Doctor:</strong> Dr. Jane Smith</li>
+            <li><strong>Status:</strong> Confirmed</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><button class="button" onclick="togglePastBooking()">Show Past Booking Info</button></h2>
+        <div id="pastBooking" class="hidden">
+            <ul>
+                <li><strong>Appointment Date:</strong> July 15, 2024</li>
+                <li><strong>Department:</strong> Orthopedics</li>
+                <li><strong>Doctor:</strong> Dr. Emily Davis</li>
+                <li><strong>Status:</strong> Completed</li>
+                <li><strong>Notes:</strong> Follow-up scheduled for August 15, 2024</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePastBooking() {
+        var pastBooking = document.getElementById('pastBooking');
+        if (pastBooking.classList.contains('hidden')) {
+            pastBooking.classList.remove('hidden');
+        } else {
+            pastBooking.classList.add('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>
